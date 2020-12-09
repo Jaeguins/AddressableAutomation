@@ -10,7 +10,10 @@ namespace Assets.AddressableAutomation.Core {
     public class JsonObject : List<SortableDataPair> {
         public static JsonObject ReadObject(JsonReader reader) {
             JsonObject ret = new JsonObject();
-            if (reader.Token != JsonToken.ObjectStart) throw new Exception("Not in object");
+            if (reader.Token != JsonToken.ObjectStart) {
+                Debug.LogWarning("Not in object");
+                return ret;
+            }
             string lastPropertyName=Empty;
             bool multipleValue = false;
             List<object> lastValue = null;
@@ -25,6 +28,7 @@ namespace Assets.AddressableAutomation.Core {
                         break;
                     case JsonToken.ObjectStart:
                         lastValue.Add(ReadObject(reader));
+                        ret.Add(new SortableDataPair(lastPropertyName,lastValue?.ToArray()));
                         break;
                     case JsonToken.ArrayStart:
                         multipleValue = true;

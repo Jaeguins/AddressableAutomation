@@ -2,28 +2,35 @@
 using System.Collections.Generic;
 using Assets.AddressableAutomation.Core;
 using UnityEngine;
-
-public class Tester:MonoBehaviour{
-    [AAData(ProcessType.Set,"Val1")]
+[CreateAssetMenu(fileName = "temp",menuName="tester")]
+public class Tester:ScriptableObject{
+    [AAField(AAProcessType.Set,"Val1")]
     public int Val1Field;
 
 
-    [AAData(ProcessType.Callback,"Val2","InsertVal2Data")]
+    [AAField(AAProcessType.Set,"Val2")]
     public List<string> Val2Data=new List<string>();
-        
-    public void InsertVal2Data(object[] data) {
-        for (int i = 0; i < data.Length; i++) {
-            Val2Data.Add((string)data[i]);
-        }
+
+    
+    public int[] resultValue = new int[2];
+
+
+    [AAField(AAProcessType.Nested, "Nested")]
+    public NestedData dat;
+
+    [AAMethod("Method1")]
+    public void InnerCall(object[] data) {
+        resultValue[0] = (int) data[0];
     }
-    public void foo() {
-        Tester t=null;
-        foreach (var field in t.GetType().GetFields()) {
-            foreach (var attr in field.GetCustomAttributes(true)) {
-                if (attr is AAData attrAA) {
-                    Debug.Log(attrAA.Sign);
-                }
-            }
-        }
+    [AAMethod("Method2")]
+    public void InnerCall2(object[] data) {
+        resultValue[1] = (int) data[0];
     }
+}
+[SerializeField]
+public struct NestedData {
+    
+    public int a;
+    
+    public int aa;
 }

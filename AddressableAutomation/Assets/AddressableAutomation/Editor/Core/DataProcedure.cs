@@ -1,27 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.AddressableAutomation.EditorView;
 using LitJson;
+using UnityEngine;
 
 namespace Assets.AddressableAutomation.Core {
 
     public class DataProcedure {
-        public string AddressableName=string.Empty;
+        public string Path=string.Empty;
         public JsonObject Object;
-        private const string _addressKeyword = "Address";
+        
         public static DataProcedure ReadOneData(JsonReader reader) {
-            DataProcedure ret = new DataProcedure();
-            ret.Object=JsonObject.ReadObject(reader);
+            DataProcedure ret = new DataProcedure {
+                Object = JsonObject.ReadObject(reader)
+            };
             foreach (var t in ret.Object) {
-                if (t.Key == _addressKeyword) {
-                    ret.AddressableName = t.Value[0].ToString();
+                if (t.Key == AAOption.PathKeyword) {
+                    ret.Path = t.Value[0].ToString();
                 }
             }
-            if(ret.AddressableName==string.Empty)throw new Exception("No named procedure");
+            if (ret.Path == string.Empty) {
+                Debug.LogWarning(AAOption.NoAssetFoundAlert);
+            };
             return ret;
         }
         public static List<DataProcedure> GenerateProcedureFromJson(string data) {
-            string log = string.Empty;
-
             JsonReader reader = new JsonReader(data);
             List<DataProcedure> procedures = new List<DataProcedure>();
             bool recording = false;
@@ -39,6 +42,7 @@ namespace Assets.AddressableAutomation.Core {
                     
                 }
             }
+            reader.Close();
             return procedures;
         }
     }
