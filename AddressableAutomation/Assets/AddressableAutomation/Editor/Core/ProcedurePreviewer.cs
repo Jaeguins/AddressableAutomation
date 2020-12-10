@@ -5,62 +5,74 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Assets.AddressableAutomation.EditorView;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using Object = UnityEngine.Object;
 
 namespace Assets.AddressableAutomation.Core {
-    internal class AAInternal:AAProcessType {
+
+    internal class AAInternal : AAProcessType {
         public const int MethodCall = 4;
+        public const int Create = 5;
     }
-    public class ProcedurePreviewer{
+
+    public class ProcedurePreviewer {
         public string Path;
         public JsonObjectPreviewer Objects;
         public static ProcedurePreviewer GetPreviewOfProcedure(DataProcedure input) {
-            ProcedurePreviewer ret=new ProcedurePreviewer();
+            ProcedurePreviewer ret = new ProcedurePreviewer();
             ret.Path = input.Path;
-            
+
 
 
             Object asset = AssetDatabase.LoadAssetAtPath<Object>(input.Path);
             foreach (SortableDataPair pair in input.Object) {
-                if(pair.Key!=AAOption.PathKeyword)
-                    ret.Objects=(JsonObjectPreviewer.GetPreviewOfProcedure(asset,input.Object));
+                if (pair.Key != AAOption.PathKeyword) ret.Objects = (JsonObjectPreviewer.GetPreviewOfProcedure(asset, input.Object));
             }
             return ret;
         }
 
-        public bool opening = false;
+        public bool opening = true;
     }
 
     public class JsonObjectPreviewer : List<SortableDataPairPreviewer> {
-        public static JsonObjectPreviewer GetPreviewOfProcedure(object target,JsonObject input) {
-            JsonObjectPreviewer ret=new JsonObjectPreviewer();
-            
-            
+        public bool opening = true;
+        public static JsonObjectPreviewer GetPreviewOfProcedure(object target, JsonObject input) {
+            JsonObjectPreviewer ret = new JsonObjectPreviewer();
+
+
             foreach (SortableDataPair pair in input) {
-                if(pair.Key!=AAOption.PathKeyword)
-                    ret.Add(SortableDataPairPreviewer.GetPreviewOfData(target,pair));
+                if (pair.Key != AAOption.PathKeyword) ret.Add(SortableDataPairPreviewer.GetPreviewOfData(target, pair, target == null));
             }
-            
+
             return ret;
         }
     }
 
     public class SortableDataPairPreviewer : IComparable<SortableDataPairPreviewer> {
         public string Signature;
-        public int Type=AAInternal.None;
+        public int Type = AAInternal.None;
         public List<object> OldValues = new List<object>(),
                             NewValues = new List<object>();
         public bool NotFound = true,
                     Duplicated = false,
-                MethodCalling=false;
+                    MethodCalling = false;
         public int CompareTo(SortableDataPairPreviewer other) => string.Compare(Signature, other.Signature, StringComparison.Ordinal);
 
-        public static SortableDataPairPreviewer GetPreviewOfData(object target, SortableDataPair input) {
+        public static SortableDataPairPreviewer GetPreviewOfData(object target, SortableDataPair input, bool isNull) {
             SortableDataPairPreviewer ret = new SortableDataPairPreviewer();
             ret.Signature = input.Key;
+            if (isNull) {
+                ret.NotFound = true;
+                ret.MethodCalling = false;
+                ret.Type = AAInternal.Create;
 
+                foreach (var t in input.Value) {
+                    ret.NewValues.Add(t);
+                }
+                return ret;
+            }
 
 
             bool pastFound = false,
@@ -78,8 +90,7 @@ namespace Assets.AddressableAutomation.Core {
                             ret.NotFound = false;
 
                             ret.OldValues.Add(method.Name);
-                            foreach(object indivVal in input.Value)
-                                ret.NewValues.Add(indivVal);
+                            foreach (object indivVal in input.Value) ret.NewValues.Add(indivVal);
                             ret.MethodCalling = true;
                             ret.Type = AAInternal.MethodCall;
                         }
@@ -87,7 +98,7 @@ namespace Assets.AddressableAutomation.Core {
                 }
                 if (breakFlag) break;
             }
-            if (breakFlag||pastFound) return ret;
+            if (breakFlag || pastFound) return ret;
             foreach (FieldInfo field in target.GetType().GetFields()) {
                 foreach (Attribute tAttr in field.GetCustomAttributes()) {
                     if (tAttr is AAField attr) {
@@ -101,11 +112,10 @@ namespace Assets.AddressableAutomation.Core {
                             ret.NotFound = false;
                             object value = field.GetValue(target);
                             ret.Type = attr.Type;
-                            ret.MethodCalling=false;
+                            ret.MethodCalling = false;
                             switch (attr.Type) {
                                 case AAInternal.Set:
                                 {
-                                    
                                     if (value is IEnumerable enumerableValue) {
                                         foreach (var t in enumerableValue) {
                                             ret.OldValues.Add(t);
@@ -123,14 +133,29 @@ namespace Assets.AddressableAutomation.Core {
                                     ret.NewValues.Add(JsonObjectPreviewer.GetPreviewOfProcedure(value, input.Value[0] as JsonObject));
                                     break;
                                 case AAInternal.AssetReferenceLink:
-                                    if (value is AssetReference oldRef) {
-                                        string[] splitted = input.Value[0].ToString().Split('!');
+                                {
+                                    if (value is IEnumerable enumerableValue) {
+                                        foreach (var t in enumerableValue) {
+                                            ret.OldValues.Add(t);
+                                        }
+                                        foreach (var val in input.Value) {
+                                            string[] splitted = val.ToString().Split('!');
+                                            var newVal = new AssetReference(AssetDatabase.AssetPathToGUID(splitted[0]));
+                                            if (splitted.Length > 1) {
+                                                newVal.SubObjectName = splitted[1];
+                                            }
+                                            ret.NewValues.Add(newVal);
+                                        }
+                                    } else if (value is AssetReference oldRef) {
                                         ret.OldValues.Add(value);
-                                        var newVal = new AssetReference(AssetDatabase.AssetPathToGUID(input.Value[0].ToString())) {
-                                            SubObjectName = splitted[1]
-                                        };
+                                        string[] splitted = input.Value[0].ToString().Split('!');
+                                        var newVal = new AssetReference(AssetDatabase.AssetPathToGUID(splitted[0]));
+                                        if (splitted.Length > 1) {
+                                            newVal.SubObjectName = splitted[1];
+                                        }
                                         ret.NewValues.Add(newVal);
                                     }
+                                }
                                     break;
                                 default:
                                     throw new ArgumentOutOfRangeException();
@@ -142,7 +167,6 @@ namespace Assets.AddressableAutomation.Core {
             }
             return ret;
         }
-        
     }
 
 }

@@ -2,12 +2,17 @@
   {
     "Path": "Assets/Tester/temp.asset",
     "Val1": 2,
-    "Val2": ["a", "b", "c"],
+    "Val2": [ "a", "b", "c" ],
     "Method1": 3,
-    "Method2": [1, 2, 3],
-    "Nested": {
-      "A": -1,
-      "AA": 0
+    "Method2": [ 1, 2, 3 ],
+    "Nested": "Assets/Tester/ChangedTarget.asset!",
+    "NNested": {
+      "A": 1,
+      "AAB": 2,
+      "AA": 3
     }
+  },
+  {
+    "Path" :  "asdfqwefq" 
   }
 ]

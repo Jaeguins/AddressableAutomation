@@ -1,7 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Assets.AddressableAutomation.Core;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+
 [CreateAssetMenu(fileName = "temp",menuName="tester")]
 public class Tester:ScriptableObject{
     [AAField(AAProcessType.Set,"Val1")]
@@ -9,15 +12,17 @@ public class Tester:ScriptableObject{
 
 
     [AAField(AAProcessType.Set,"Val2")]
-    public List<string> Val2Data=new List<string>();
+    public string[] Val2Data;
 
     
     public int[] resultValue = new int[2];
 
+    [AAField(AAProcessType.AssetReferenceLink,"Nested")]
+    public AssetReference Nested;
 
-    [AAField(AAProcessType.Nested, "Nested")]
-    public NestedData dat;
-
+    [AAField(AAProcessType.Nested, "NNested")]
+    public NNestedData NNested=new NNestedData();
+    
     [AAMethod("Method1")]
     public void InnerCall(object[] data) {
         resultValue[0] = (int) data[0];
@@ -27,10 +32,10 @@ public class Tester:ScriptableObject{
         resultValue[1] = (int) data[0];
     }
 }
-[SerializeField]
-public struct NestedData {
-    
+[Serializable]
+public class NNestedData {
+    [AAField(AAProcessType.Set, "A")]
     public int a;
-    
-    public int aa;
+    [AAField(AAProcessType.Set, "AA")]
+    public int b;
 }
