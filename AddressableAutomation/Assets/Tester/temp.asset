@@ -12,16 +12,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cf5012e00685d24fa3a523e09640750, type: 3}
   m_Name: temp
   m_EditorClassIdentifier: 
-  Val1Field: 114
-  Val2Data:
-  - "\u3131"
-  - "\u3134"
-  - "\u3137"
-  - "\u3139"
-  resultValue: 0300000001000000
-  Nested:
+  CorrectValue: 1
+  CorrectArray:
+  - a
+  - b
+  - c
+  CorrectList:
+  - 1.1
+  - 1.2
+  - 1.3
+  CorrectAssetReference:
+    m_AssetGUID: 7ac564f3e9accf546ba112e844d1280d
+    m_SubObjectName: 
+  CorrectAssetReferenceList:
+  - m_AssetGUID: 7ac564f3e9accf546ba112e844d1280d
+    m_SubObjectName: 
+  - m_AssetGUID: 7ac564f3e9accf546ba112e844d1280d
+    m_SubObjectName: 
+  CorrectAssetReferenceArray:
+  - m_AssetGUID: 7ac564f3e9accf546ba112e844d1280d
+    m_SubObjectName: 
+  - m_AssetGUID: 7ac564f3e9accf546ba112e844d1280d
+    m_SubObjectName: 
+  - m_AssetGUID: 7ac564f3e9accf546ba112e844d1280d
+    m_SubObjectName: 
+  CorrectNestedData:
+    Nested1: 1
+    Nested2: 2
+  CorrectNestedArray:
+  - Nested1: 1
+    Nested2: 2
+  - Nested1: 3
+    Nested2: 4
+  CorrectNestedList:
+  - Nested1: 5
+    Nested2: 6
+  - Nested1: 7
+    Nested2: 8
+  - Nested1: 9
+    Nested2: 10
+  WrongTypeValue: 0
+  WrongTypeArray: 00000000
+  WrongTypeList: 
+  WrongTypeAssetReference:
     m_AssetGUID: 
     m_SubObjectName: 
-  NNested:
-    a: 0
-    b: 0
+  WrongNestedData:
+    NotNested1: 0
+    NotNested2: 0
+  WrongAttrSetAsset: 0
+  WrongAttrSetNested: 0
+  WrongAttrAssetSet:
+    m_AssetGUID: 
+    m_SubObjectName: 
+  WrongAttrAssetNested:
+    m_AssetGUID: 
+    m_SubObjectName: 
+  WrongAttrNestedSet:
+    Nested1: 0
+    Nested2: 0
+  WrongAttrNestedAsset:
+    Nested1: 0
+    Nested2: 0

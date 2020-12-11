@@ -28,8 +28,10 @@ namespace Assets.AddressableAutomation.Core {
         public static List<DataProcedure> GenerateProcedureFromJson(string data) {
             JsonReader reader = new JsonReader(data);
             List<DataProcedure> procedures = new List<DataProcedure>();
+            string log = string.Empty;
             bool recording = false;
             while (reader.Read()) {
+                log += $"{reader.Token}-{reader.Value}\n";
                 switch (reader.Token) {
                     case JsonToken.ArrayStart:
                         recording = true;

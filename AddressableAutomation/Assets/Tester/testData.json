@@ -1,18 +1,62 @@
 ﻿[
   {
     "Path": "Assets/Tester/temp.asset",
-    "Val1": 2,
-    "Val2": [ "a", "b", "c" ],
-    "Method1": 3,
-    "Method2": [ 1, 2, 3 ],
-    "Nested": "Assets/Tester/ChangedTarget.asset!",
-    "NNested": {
-      "A": 1,
-      "AAB": 2,
-      "AA": 3
-    }
-  },
-  {
-    "Path" :  "asdfqwefq" 
+    "corV": 1,
+    "corV-Array": [ "a", "b", "c" ],
+    "corV-List": [ 1.1, 1.2, 1.3 ],
+    "corA": "Assets/Tester/TestMat.mat!",
+    "corA-List": [ "Assets/Tester/TestMat.mat!", "Assets/Tester/TestMat.mat!" ],
+    "corA-Array": [ "Assets/Tester/TestMat.mat!", "Assets/Tester/TestMat.mat!", "Assets/Tester/TestMat.mat!" ],
+    "corN": {
+      "NestedValue1": 1,
+      "NestedValue2": 2
+    },
+    "corN-Array": [
+      {
+        "NestedValue1": 1,
+        "NestedValue2": 2
+      },
+      {
+        "NestedValue1": 3,
+        "NestedValue2": 4
+      }
+    ],
+    "corN-List": [
+      {
+        "NestedValue1": 5,
+        "NestedValue2": 6
+      },
+      {
+        "NestedValue1": 7,
+        "NestedValue2": 8
+      },
+      {
+        "NestedValue1": 9,
+        "NestedValue2": 10
+      }
+    ],
+    "corM": [ "ABC" ],
+
+
+    "badV": "aaa",
+    "badV-Array": "aaaa",
+    "badV-List": "BBBBBB",
+    "badA": 1,
+    "badN-Not": 3,
+    "badAttr-SA": "Assets/Tester/TestMat.mat!",
+    "badAttr-SN": {
+      "NestedValue1": 1,
+      "NestedValue2": 2
+    },
+    "badAttr-AS": 1,
+    "badAttr-AN": {
+      "NestedValue1": 1,
+      "NestedValue2": 2
+    },
+    "badAttr-NS": 1,
+    "badAttr-NA": "Assets/Tester/TestMat.mat!"
+
+
   }
+  
 ]

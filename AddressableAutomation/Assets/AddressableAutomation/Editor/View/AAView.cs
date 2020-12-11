@@ -41,6 +41,10 @@ namespace Assets.AddressableAutomation.EditorView {
                     }
                 }
             }
+            if (GUILayout.Button("Clear")) {
+                proced.Clear();
+                results.Clear();
+            }
             if (GUILayout.Button("Apply")) {
                 Apply();
             }
@@ -88,7 +92,7 @@ namespace Assets.AddressableAutomation.EditorView {
             EditorGUI.indentLevel += 1;
             Color signatureColor = Color.black;
             if (pair.Duplicated) signatureColor = Color.blue;
-            if (pair.MethodCalling) signatureColor = Color.green;
+            // if (pair.MethodCalling) signatureColor = Color.green;
             if (pair.NotFound) signatureColor = Color.red;
             
             string signatureText = pair.Signature;
@@ -122,20 +126,13 @@ namespace Assets.AddressableAutomation.EditorView {
                     EditorGUI.indentLevel += 1;
                     for (int i = 0; i < totalCount; i++) {
                         string toSay = string.Empty;
-                        AssetReference oldRef=pair.OldValues.Count > i ? (AssetReference)(pair.OldValues[i]):null,
-                                       newRef=pair.NewValues.Count > i ? (AssetReference)(pair.NewValues[i]):null;
-                        toSay += oldRef.editorAsset!=null?oldRef.editorAsset.name:"null";
+                        AssetReference oldRef=pair.OldValues.Count > i ? (AssetReference)(pair.OldValues[i]):default,
+                                       newRef=pair.NewValues.Count > i ? (AssetReference)(pair.NewValues[i]):default;
+                        toSay += (oldRef!=null&&oldRef.editorAsset!=null)?oldRef.editorAsset.name:"null";
                         if (newRef != null) {
-                            toSay += $"->{(newRef.editorAsset!=null?newRef.editorAsset.name:"null")}";
+                            toSay += $"->{((newRef!=null&&newRef.editorAsset!=null)?newRef.editorAsset.name:"null")}{(newRef.SubObjectName!=null?"/"+newRef.SubObjectName:"")}";
                         }
-                        
-                        
-                        if (pair.NewValues.Count > i) {
-                            toSay += $"{((AssetReference) pair.NewValues[i]).editorAsset?.name}";
-                        } else {
-                            toSay += "null";
-                        }
-                        
+
                         EditorGUILayout.LabelField(toSay);
                         
                     }
@@ -176,12 +173,15 @@ namespace Assets.AddressableAutomation.EditorView {
                     break;
                 case AAInternal.Nested:
                 {
-                    if (pair.NewValues[0] is JsonObjectPreviewer jsonPair) {
-                        jsonPair.opening = EditorGUILayout.Foldout(jsonPair.opening, "Object");
-                        if (jsonPair.opening) {
-                            DrawJsonObject(jsonPair);
+                    EditorGUI.indentLevel += 1;
+                    if(pair.NewValues.Count>0)
+                        if (pair.NewValues[0] is JsonObjectPreviewer jsonPair) {
+                            jsonPair.opening = EditorGUILayout.Foldout(jsonPair.opening, "Object");
+                            if (jsonPair.opening) {
+                                DrawJsonObject(jsonPair);
+                            }
                         }
-                    }
+                    EditorGUI.indentLevel -= 1;
                 }
                     break;
                 case AAInternal.None:

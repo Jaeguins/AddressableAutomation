@@ -41,7 +41,7 @@ namespace Assets.AddressableAutomation.Core {
         public static JsonObjectPreviewer GetPreviewOfProcedure(object target, JsonObject input) {
             JsonObjectPreviewer ret = new JsonObjectPreviewer();
 
-
+            if (input == null) return null;
             foreach (SortableDataPair pair in input) {
                 if (pair.Key != AAOption.PathKeyword) ret.Add(SortableDataPairPreviewer.GetPreviewOfData(target, pair, target == null));
             }
@@ -58,6 +58,15 @@ namespace Assets.AddressableAutomation.Core {
         public bool NotFound = true,
                     Duplicated = false,
                     MethodCalling = false;
+
+#region Overrides of Object
+
+        public override string ToString() {
+            return $"{Signature} - {OldValues.Count}/{NewValues.Count}";
+        }
+
+#endregion
+
         public int CompareTo(SortableDataPairPreviewer other) => string.Compare(Signature, other.Signature, StringComparison.Ordinal);
 
         public static SortableDataPairPreviewer GetPreviewOfData(object target, SortableDataPair input, bool isNull) {
@@ -130,7 +139,19 @@ namespace Assets.AddressableAutomation.Core {
                                 }
                                     break;
                                 case AAInternal.Nested:
-                                    ret.NewValues.Add(JsonObjectPreviewer.GetPreviewOfProcedure(value, input.Value[0] as JsonObject));
+                                    for (int i = 0; i < input.Value.Length; i++) {
+                                        int tC=0;
+                                        if (value is IEnumerable enumerableValue) {
+                                            foreach (var t in enumerableValue) {
+                                                if(tC<input.Value.Length)
+                                                    ret.NewValues.Add(JsonObjectPreviewer.GetPreviewOfProcedure(t, input.Value[tC] as JsonObject));
+                                                tC += 1;
+                                            }
+                                                
+                                        }
+                                        
+                                    }
+                                    
                                     break;
                                 case AAInternal.AssetReferenceLink:
                                 {
