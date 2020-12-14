@@ -17,20 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: b139c84a48c58e54eba6967b80c4b744
   m_SerializeEntries:
-  - m_GUID: 058d19c570a8d684b971ee562d979b9f
-    m_Address: 1
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
-  - m_GUID: 50f4891fcdb0f4246bc9f400320d0070
-    m_Address: asdf
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    m_MainAsset: {fileID: 0}
-    m_TargetAsset: {fileID: 0}
   - m_GUID: 7ac564f3e9accf546ba112e844d1280d
-    m_Address: Assets/Tester/TestMat.mat
+    m_Address: TestMat
     m_ReadOnly: 0
     m_SerializedLabels: []
     m_MainAsset: {fileID: 0}

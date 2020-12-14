@@ -1,0 +1,20 @@
+﻿{
+  "name": "com.jaeguins.aa",
+  "version": "0.0.1",
+  "displayName": "AssetAutomation",
+  "description": "Easy attribute based JSON to ScriptableObject parser\nFrom one JSON file to multiple ScriptableObject found by path and sync values with same attribute signature or trigger method with parameter with value in same attribute signature.\n\nHave dependancy with Addressable because of linking AssetReference.",
+  "unity": "2018.4",
+  "dependencies": {
+    "com.unity.addressables": "1.8.5"
+ },
+ "keywords": [
+    "auto",
+    "asset",
+    "addressable"
+  ],
+  "author": {
+    "name": "Jaeguins",
+    "email": "jsu4838@naver.com",
+    "url": ""
+  }
+}
