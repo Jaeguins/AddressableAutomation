@@ -13,22 +13,22 @@ MonoBehaviour:
   m_Name: AAOption
   m_EditorClassIdentifier: 
   _pathKeyword: Path
-  _assetReference: "\uC5D0\uC14B"
-  _create: "\uC0DD\uC131"
-  _method: "\uD568\uC218\uD638\uCD9C"
-  _nested: "\uAD6C\uC870\uCCB4"
-  _none: "\uC5C6\uC74C"
-  _set: "\uB300\uC785"
-  _noAssetFoundAlert: "\uC5D0\uC14B\uC5C6\uC74C"
-  _nothingInJsonAlert: "\uB0B4\uC6A9\uC5C6\uC74C"
-  _notProperTypeAlert: "\uC740(\uB294) \uD615\uC2DD\uC774 \uB9DE\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
-  _notConvertibleAlert: "\uC740(\uB294) \uC11C\uB85C \uD638\uD658\uB418\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4."
-  _methodCallAlert: "\uC774(\uAC00) \uD638\uCD9C\uB418\uC5C8\uC2B5\uB2C8\uB2E4."
-  _jumpButton: "\uC774\uB3D9"
-  _previewButton: "\uBBF8\uB9AC\uBCF4\uAE30"
-  _clearButton: "\uCDE8\uC18C"
-  _applyButton: "\uC801\uC6A9"
-  _infoButton: "\uC815\uBCF4"
+  _assetReference: Asset Reference
+  _create: Create
+  _method: Method Call
+  _nested: Nested
+  _none: None
+  _set: Set
+  _noAssetFoundAlert: No asset found
+  _nothingInJsonAlert: No data found
+  _notProperTypeAlert: ' is not proper type'
+  _notConvertibleAlert: ' is not covertible'
+  _methodCallAlert: ' called.'
+  _jumpButton: jump
+  _previewButton: preview
+  _clearButton: clear
+  _applyButton: apply
+  _infoButton: info
   _assetReferenceColor: {r: 0.2, g: 0.5, b: 0.2, a: 1}
   _createColor: {r: 1, g: 0, b: 0, a: 1}
   _methodColor: {r: 0, g: 1, b: 0, a: 1}

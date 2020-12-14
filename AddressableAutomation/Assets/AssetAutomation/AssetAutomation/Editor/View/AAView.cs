@@ -56,9 +56,6 @@ namespace AssetAutomation.Editor.View {
             GUI.enabled = true;
             EditorGUILayout.EndHorizontal();
 
-            if (GUILayout.Button(AAOption.ToInfo)) {
-                AAViewInfo.ShowWindow();
-            }
             if (_results.Count > 0) {
                 DrawData(_results);
             }
