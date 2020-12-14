@@ -62,10 +62,14 @@ public struct NestedData{//nested data structure in SecondTestClass
 }
 ```
 
- - `AAMethod` attribute can be binded to methods, each can be invoked with JSON data as parameter.
+ - `AAMethod` attribute can be binded to methods, each can be invoked with JSON data as parameter. Method invoking with asset reference is not supported now.
  - `AAField` attribute can be binded to fields, each can be set by JSON data.
  - `AAProcessType` states what will be done with JSON data for field.
    - `Set` means just try setting values to fields. Casting will be occured with `Convert.ChangeType()`. If this goes not very well, it will canceled and log warning to unity console.
    - `Nested` means try putting values to fields, but field is object and its inside has attributes too. With this type, process will do the job recursively.
    - `AssetReferenceLink` means that JSON data should be string formatted with asset reference and converted to asset reference. Asset path's validation is not contained.
-   - 
+   - `None` means nothing. Just for exception.
+
+## Future Plans (not sure)
+
+- Support `AAMethod` with `AssetReference`
