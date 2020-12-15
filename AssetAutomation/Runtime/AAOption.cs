@@ -37,6 +37,10 @@ namespace AssetAutomation.Runtime {
         public static AAOption Instance {
             get {
                 if (instance == null) {
+                    if (!AssetDatabase.IsValidFolder("Assets/AssetAutomation")) AssetDatabase.CreateFolder("Assets", "AssetAutomation");
+                    if (!AssetDatabase.IsValidFolder("Assets/AssetAutomation/Resources")) AssetDatabase.CreateFolder("Assets/AssetAutomation", "Resources");
+                    instance = Resources.Load<AAOption>("AAOption"); 
+                    AssetDatabase.CreateAsset(CreateInstance<AAOption>(), "Assets/AssetAutomation/Resources/AAOption.asset");
                     instance = Resources.Load<AAOption>("AAOption");
                 }
                 return instance;
@@ -121,9 +125,7 @@ namespace AssetAutomation.Runtime {
 
 #endregion
 
-        static AAOption GetOption() {
-            return Resources.Load<AAOption>("AAOption");
-        }
+        static AAOption GetOption() => AAOption.Instance;
         [SettingsProvider]
         static SettingsProvider GetSettingProvider() {
             SettingsProvider ret = null;
