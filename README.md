@@ -1,8 +1,8 @@
 ﻿asdf# AddressableAutomation
-Easy attribute based JSON to ScriptableObject parser
-From one JSON file to multiple ScriptableObject found by path and sync values with same attribute signature or trigger method with parameter with value in same attribute signature.
+Easy attribute-based JSON to ScriptableObject parser
+From one JSON file to multiple ScriptableObject found with path and sync values with same attribute signature or trigger method with parameters with value in same attribute signature.
 
-Have dependancy with Addressable because of linking AssetReference.
+Have dependency on Addressable because of linking AssetReference.
 
 ## How to Use
 
@@ -28,8 +28,8 @@ Have dependancy with Addressable because of linking AssetReference.
 ]
 ```
  - `Path` attribute : Target asset's path. Can be alternated in project settings.
- - Values for `AssetReference` : Due to subobject's name, you should add `!` and subobject's name. (`!` is optional.)
- - Currently, normal object link is not supported.
+ - Values for `AssetReference` : Due to the subobject's name, you should add `!` and the subobject's name. (`!` is optional.)
+ - Currently, a normal object link is not supported.
 
 ### ScriptableObject/Nested object
 
@@ -62,14 +62,21 @@ public struct NestedData{//nested data structure in SecondTestClass
 }
 ```
 
- - `AAMethod` attribute can be binded to methods, each can be invoked with JSON data as parameter. Method invoking with asset reference is not supported now.
- - `AAField` attribute can be binded to fields, each can be set by JSON data.
- - `AAProcessType` states what will be done with JSON data for field.
-   - `Set` means just try setting values to fields. Casting will be occured with `Convert.ChangeType()`. If this goes not very well, it will canceled and log warning to unity console.
-   - `Nested` means try putting values to fields, but field is object and its inside has attributes too. With this type, process will do the job recursively.
-   - `AssetReferenceLink` means that JSON data should be string formatted with asset reference and converted to asset reference. Asset path's validation is not contained.
-   - `None` means nothing. Just for exception.
+ - `AAMethod` attribute can be bound to methods, each can be invoked with JSON data as a parameter. Method invoking with asset reference and nested JSON object is not supported now.
+ - `AAField` attribute can be bound to fields, each can be set by JSON data.
+ - `AAProcessType` states what will be done with JSON data for fields.
+   - `Set` means just try setting values to fields. Casting will be occurred with `Convert.ChangeType()`. If this goes not very well, it will be canceled, and log a warning to unity console.
+   - `Nested` means try putting values to fields, but the field is object and its inside has attributes too. With this type, the process will do the job recursively.
+   - `AssetReferenceLink` means that JSON data should be a string formatted with asset reference and converted to asset reference. Asset path validation is not contained.
+   - `None` means nothing. Just for an exception.
 
-## Future Plans (not sure)
+### Project Settings
+![Project Setting Image](https://github.com/Jaeguins/ImagePool/blob/main/Files/AA.jpg)
 
-- Support `AAMethod` with `AssetReference`
+ - `Path Keyword` is what JSON attribute means about the target asset's path.
+ - `Asset Reference Keyword` is seperator character for dividing value to asset path and subobject.
+
+### Notice
+
+- This package uses Json reader by [LitJson](https://litjson.net/) and integrated only reading stuff.
+- This package is [Unlicense](https://unlicense.org/) license.
