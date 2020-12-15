@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66d6eb24607490f488be17121e969531, type: 3}
+  m_Name: AAOption
+  m_EditorClassIdentifier: 
+  _pathKeyword: Path
+  _assetReferenceKeyword: 33
+  _assetReference: Asset Reference
+  _create: Create
+  _method: Method Call
+  _nested: Nested
+  _none: None
+  _set: Set
+  _noAssetFoundAlert: No asset found
+  _nothingInJsonAlert: No data found
+  _notProperTypeAlert: ' is not proper type'
+  _notConvertibleAlert: ' is not covertible'
+  _methodCallAlert: ' called.'
+  _methodNestedAlert: ' : MethodCalling with nested object/AssetReference is not
+    supported.'
+  _jumpButton: jump
+  _previewButton: preview
+  _clearButton: clear
+  _applyButton: apply
+  _infoButton: info
+  _assetReferenceColor: {r: 0.2, g: 0.5, b: 0.2, a: 1}
+  _createColor: {r: 1, g: 0, b: 0, a: 1}
+  _methodColor: {r: 0, g: 1, b: 0, a: 1}
+  _nestedColor: {r: 0, g: 0, b: 1, a: 1}
+  _noneColor: {r: 1, g: 0, b: 0, a: 1}
+  _setColor: {r: 0, g: 0, b: 0, a: 1}

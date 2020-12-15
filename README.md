@@ -1,4 +1,4 @@
-# AddressableAutomation
+﻿asdf# AddressableAutomation
 Easy attribute based JSON to ScriptableObject parser
 From one JSON file to multiple ScriptableObject found by path and sync values with same attribute signature or trigger method with parameter with value in same attribute signature.
 
